@@ -1,0 +1,108 @@
+<div class="container" *ngIf="Mode == 'Design'">
+  <form [formGroup]="tableForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3 mt-3 row">
+      <div class="col-md-12">
+        <label for="select-dataset" class="form-label">Choose Dataset</label>
+        <select
+          formControlName="dataSetName"
+          class="form-select"
+          id="select-dataset"
+        >
+          <option *ngFor="let ds of DataSets" [ngValue]="ds">{{ ds }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <div class="col-md-6">
+        <label for="select-fields" class="form-label"
+          >Select fields to display</label
+        >
+        <select
+          multiple
+          formControlName="fields"
+          class="form-select"
+          id="select-fields"
+          size="6"
+        >
+          <option *ngFor="let field of Fields" [ngValue]="field">
+            {{ field }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="select-filter" class="form-label"
+          >Select {{ FilterField }} to include</label
+        >
+        <select
+          multiple
+          formControlName="filterValues"
+          class="form-control"
+          id="select-filter"
+          size="6"
+        >
+          <option *ngFor="let filter of Filters" [ngValue]="filter">
+            {{ filter }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-check mb-3">
+          <input
+            type="checkbox"
+            formControlName="grouping"
+            id="grouping"
+            class="form-check-input"
+          />
+          <label for="grouping" class="form-check-label"
+            >Group By {{ GroupingField }}</label
+          >
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="select-sorting" class="form-label"
+        >Select sorting field</label
+      >
+      <div class="col-md-6">
+        <select
+          formControlName="sortBy"
+          class="form-select"
+          id="select-sorting"
+        >
+          <option *ngFor="let field of Fields" [ngValue]="field">
+            {{ field }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <div class="form-check mb-3">
+          <input
+            type="checkbox"
+            formControlName="isDescendingSorting"
+            id="isDescendingSorting"
+            class="form-check-input"
+          />
+          <label for="isDescendingSorting" class="form-check-label"
+            >Sort Descending Order</label
+          >
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button
+          type="submit"
+          [disabled]="!tableForm.valid"
+          class="btn btn-success btn-block"
+        >
+          Create Report
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<div id="viewer-host" *ngIf="Mode == 'Preview'">
+  <gc-activereports-viewer (init)="onViewerInit()"> </gc-activereports-viewer>
+</div>
